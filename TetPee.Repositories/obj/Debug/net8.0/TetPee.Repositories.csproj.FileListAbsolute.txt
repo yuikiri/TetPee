@@ -1,0 +1,15 @@
+D:\dotNet\TetPee\TetPee.Repositories\bin\Debug\net8.0\TetPee.Repositories.deps.json
+D:\dotNet\TetPee\TetPee.Repositories\bin\Debug\net8.0\TetPee.Repositories.runtimeconfig.json
+D:\dotNet\TetPee\TetPee.Repositories\bin\Debug\net8.0\TetPee.Repositories.dll
+D:\dotNet\TetPee\TetPee.Repositories\bin\Debug\net8.0\TetPee.Repositories.pdb
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.csproj.AssemblyReference.cache
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.AssemblyInfoInputs.cache
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.AssemblyInfo.cs
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.csproj.CoreCompileInputs.cache
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.sourcelink.json
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.dll
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\refint\TetPee.Repositories.dll
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.pdb
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\TetPee.Repositories.genruntimeconfig.cache
+D:\dotNet\TetPee\TetPee.Repositories\obj\Debug\net8.0\ref\TetPee.Repositories.dll

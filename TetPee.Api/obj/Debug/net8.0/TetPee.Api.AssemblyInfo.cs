@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TetPee.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5eebda48254f2b730156cd1cb31947a8b89b0150")]
 [assembly: System.Reflection.AssemblyProductAttribute("TetPee.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TetPee.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

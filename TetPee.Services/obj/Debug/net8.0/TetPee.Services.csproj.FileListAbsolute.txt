@@ -1,0 +1,16 @@
+D:\dotNet\TetPee\TetPee.Services\bin\Debug\net8.0\TetPee.Services.deps.json
+D:\dotNet\TetPee\TetPee.Services\bin\Debug\net8.0\TetPee.Services.dll
+D:\dotNet\TetPee\TetPee.Services\bin\Debug\net8.0\TetPee.Services.pdb
+D:\dotNet\TetPee\TetPee.Services\bin\Debug\net8.0\TetPee.Repositories.dll
+D:\dotNet\TetPee\TetPee.Services\bin\Debug\net8.0\TetPee.Repositories.pdb
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.csproj.AssemblyReference.cache
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.AssemblyInfoInputs.cache
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.AssemblyInfo.cs
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.csproj.CoreCompileInputs.cache
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.sourcelink.json
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.S.D785926C.Up2Date
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.dll
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\refint\TetPee.Services.dll
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\TetPee.Services.pdb
+D:\dotNet\TetPee\TetPee.Services\obj\Debug\net8.0\ref\TetPee.Services.dll

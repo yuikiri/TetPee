@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "aYGidyIPK00YlHTjsk6Jx2sJAwGiN6HynG0riXQOwVY=",
+  "Source": "TetPee.Api",
+  "BasePath": "_content/TetPee.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
