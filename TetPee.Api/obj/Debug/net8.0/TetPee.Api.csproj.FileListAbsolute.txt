@@ -95,11 +95,6 @@ D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\TetPee.Api.MvcApplicationPartsAssem
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\TetPee.Api.sourcelink.json
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets.build.json
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets.development.json
-D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets\msbuild.TetPee.Api.Microsoft.AspNetCore.StaticWebAssets.props
-D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets\msbuild.build.TetPee.Api.props
-D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.TetPee.Api.props
-D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.TetPee.Api.props
-D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets.pack.json
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\scopedcss\bundle\TetPee.Api.styles.css
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\TetPee.Api.csproj.Up2Date
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\TetPee.Api.dll
@@ -107,3 +102,11 @@ D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\refint\TetPee.Api.dll
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\TetPee.Api.pdb
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\TetPee.Api.genruntimeconfig.cache
 D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\ref\TetPee.Api.dll
+D:\dotNet\TetPee\TetPee.Api\bin\Debug\net8.0\TetPee.Api.staticwebassets.endpoints.json
+D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\dotNet\TetPee\TetPee.Api\obj\Debug\net8.0\swae.build.ex.cache
