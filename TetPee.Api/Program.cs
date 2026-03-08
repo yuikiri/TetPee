@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TetPee.Api.Middlewares;
 using TetPee.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+builder.Services.AddTransient<GlobalExceptionHandlerMiddlewares>();
+
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlerMiddlewares>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

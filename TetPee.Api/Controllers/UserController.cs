@@ -18,6 +18,7 @@ public class UserController: ControllerBase
 
     //HTTP method: GET, POST, DELETE, PUT, PATCH
     //PARAM: Query string, path param, body param
+    //PATCH: update 1 phần
     
     //Query string: http?//localhost:5000/User?name=abc
         //name va age là query string
@@ -47,9 +48,9 @@ public class UserController: ControllerBase
     //
     public IActionResult GetUsers([FromQuery]string? searchTerm)
     {
-        var user = _dbContext.Users.ToList();
-        return Ok(user);
-
+        var users = _dbContext.Users.ToList();
+        // throw new Exception("Get all users");
+        return Ok(users);
     }
     
     [HttpGet(template: "{id}")]
@@ -57,9 +58,22 @@ public class UserController: ControllerBase
     //ko phải from query
     public IActionResult GetUsersById([FromRoute]Guid id)
     {
+        var users = _dbContext.Users.FindAsync(id);
+        //return Ok(Users)
+        if (users == null)
+        {
+            return NotFound();
+        }
+        return Ok(users);
+    }
+    
+    //PUT update user
+    [HttpPut(template: "{id}")]
+    public IActionResult UpdateUserById(Guid id, [FromBody] Request.UpdateUserRequest request)
+    {
         //var user = _dbContext.Users.ToList();
         //return Ok(Users)
-        return Ok("Get all users");
+        return Ok("Update successfully");
     }
     
     //POST create user
@@ -92,12 +106,5 @@ public class UserController: ControllerBase
         return Ok("Delete successfully");
     }
     
-    //PUT update user
-    [HttpPut(template: "{id}")]
-    public IActionResult UpdateUserById(Guid id)
-    {
-        //var user = _dbContext.Users.ToList();
-        //return Ok(Users)
-        return Ok("Update successfully");
-    }
+    
 }
