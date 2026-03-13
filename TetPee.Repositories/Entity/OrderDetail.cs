@@ -1,4 +1,6 @@
-﻿using TetPee.Repositories.Abstraction;
+﻿using TetPee.Repositories.Abtraction
+;
+using TetPee.Repository.Abtraction;
 
 namespace TetPee.Repositories.Entity;
 
@@ -13,5 +15,5 @@ public class OrderDetail: BaseEntity<Guid>, IAuditableEntity
     public decimal UnitPrice { get; set; } // Price at the time of order
     
     public DateTimeOffset CreatedAt { get; set; }
-    public DateTimeOffset? UpdateAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 }

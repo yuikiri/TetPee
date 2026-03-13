@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using TetPee.Repositories;
 using TetPee.Repositories.Entity;
 using TetPee.Services.User;
@@ -10,10 +12,12 @@ namespace TetPee.Api.Controllers;
 public class UserController: ControllerBase
 {
     private readonly AppDbContext _dbContext;
+    private readonly IService _userService;
     //cái này nâng cao lúc sau sẽ giải thích
-    public UserController(AppDbContext dbContext)
+    public UserController(AppDbContext dbContext, IService userService)
     {
         _dbContext = dbContext;
+        _userService = userService;
     }
 
     //HTTP method: GET, POST, DELETE, PUT, PATCH
@@ -46,33 +50,27 @@ public class UserController: ControllerBase
     //(template: ""): path param
     //query param là các biến nằm sau dấu chấm hỏi
     //
-    public IActionResult GetUsers([FromQuery]string? searchTerm)
+    public async Task<IActionResult> GetUsers(string? searchTerm, int pageSize = 10, int  pageIndex = 1)
     {
-        var users = _dbContext.Users.ToList();
-        // throw new Exception("Get all users");
+        var users = await _userService.GetUsers(searchTerm, pageSize, pageIndex);
         return Ok(users);
     }
     
     [HttpGet(template: "{id}")]
     //id là này là from route
     //ko phải from query
-    public IActionResult GetUsersById([FromRoute]Guid id)
+    public async Task<IActionResult> GetUsersById(Guid id)
     {
-        var users = _dbContext.Users.FindAsync(id);
-        //return Ok(Users)
-        if (users == null)
-        {
-            return NotFound();
-        }
-        return Ok(users);
+
+        var user  = await _userService.GetUserById(id);
+        return Ok(user);
     }
     
     //PUT update user
     [HttpPut(template: "{id}")]
     public IActionResult UpdateUserById(Guid id, [FromBody] Request.UpdateUserRequest request)
     {
-        //var user = _dbContext.Users.ToList();
-        //return Ok(Users)
+
         return Ok("Update successfully");
     }
     

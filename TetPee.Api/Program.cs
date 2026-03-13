@@ -1,6 +1,12 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using TetPee.Api.Middlewares;
 using TetPee.Repositories;
+using TetPee.Repository;
+using TetPee.Services.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
-
+builder.Services.AddScoped<IService, Service>();
 builder.Services.AddTransient<GlobalExceptionHandlerMiddlewares>();
 
 var app = builder.Build();

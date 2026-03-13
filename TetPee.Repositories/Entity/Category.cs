@@ -1,4 +1,5 @@
-﻿using TetPee.Repositories.Abstraction;
+﻿using TetPee.Repositories.Abtraction;
+using TetPee.Repository.Abtraction;
 
 namespace TetPee.Repositories.Entity;
 
@@ -15,5 +16,5 @@ public class Category: BaseEntity<Guid>, IAuditableEntity
     public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
     
     public DateTimeOffset CreatedAt { get; set; }
-    public DateTimeOffset? UpdateAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 }
