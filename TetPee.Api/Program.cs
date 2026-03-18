@@ -6,7 +6,11 @@ using Microsoft.Extensions.Hosting;
 using TetPee.Api.Middlewares;
 using TetPee.Repositories;
 using TetPee.Repository;
-using TetPee.Services.User;
+
+using UserService = TetPee.Services.User;
+using CategoryService = TetPee.Services.Category;
+using SellerService = TetPee.Services.Seller;
+using IdentityService = TetPee.Services.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +26,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
-builder.Services.AddScoped<IService, Service>();
+
+builder.Services.AddScoped<UserService.IService, UserService.Service>();
+builder.Services.AddScoped<CategoryService.IService, CategoryService.Service>();
+builder.Services.AddScoped<SellerService.IService, SellerService.Service>();
+builder.Services.AddScoped<IdentityService.IService, IdentityService.Service>();
 builder.Services.AddTransient<GlobalExceptionHandlerMiddlewares>();
 
 var app = builder.Build();

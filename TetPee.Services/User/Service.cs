@@ -1,114 +1,86 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TetPee.Repositories;
+using TetPee.Repository;
+using TetPee.Services.User;
 
 namespace TetPee.Services.User;
 
 public class Service : IService
 {
     private readonly AppDbContext _dbContext;
-    
+
     public Service(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
-    
-    public async Task<Base.Response.PageResult<Response.GetUserResponse>> GetUssers(string? searchTerm, int pageSize, int pageIndex)
+
+    public async Task<Base.Response.PageResult<Response.GetUsersResponse>> GetUsers(
+        string? searchTerm,
+        int pageSize,
+        int pageIndex)
     {
         var query = _dbContext.Users.Where(x => true);
-        if (searchTerm != null)
+        
+        if(searchTerm != null)
         {
-            query = query.Where(x =>
-                x.FirstName.Contains(searchTerm) || 
-                x.LastName.Contains(searchTerm) || 
+            query = query.Where(x => 
+                x.FirstName.Contains(searchTerm) ||
+                x.LastName.Contains(searchTerm) ||
                 x.Email.Contains(searchTerm));
         }
 
-        query  = query.Skip((pageIndex - 1) * pageSize)
+        query = query.OrderBy(x => x.Email);
+        
+        query = query
+            .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize);
         
-        var selectedQuery = query.Select(x => new Response.GetUserResponse()
+        var selectedQuery = query
+            .Select(x => new Response.GetUsersResponse()
         {
             Id = x.Id,
+            Email = x.Email,
             FirstName = x.FirstName,
             LastName = x.LastName,
-            Email = x.Email,
-            Role = x.Role,
             ImageUrl = x.ImageUrl,
             PhoneNumber = x.PhoneNumber,
             Address = x.Address,
+            Role = x.Role,
         });
 
         var listResult = await selectedQuery.ToListAsync();
         var totalItems = listResult.Count();
-
-        var result = new Base.Response.PageResult<Response.GetUserResponse>()
+        
+        var result = new Base.Response.PageResult<Response.GetUsersResponse>()
         {
             Item = listResult,
             PageIndex = pageIndex,
             PageSize = pageSize,
-            TotalItems = totalItems,
-        };
-
-        return result;
-    }
-
-    public async Task<Base.Response.PageResult<Response.GetUserResponse>> GetUsers(string? searchTerm, int pageSize = 10, int pageIndex = 1)
-    {
-        var query = _dbContext.Users.Where(x => true);
-        if (searchTerm != null)
-        {
-            query = query.Where(x =>
-                x.FirstName.Contains(searchTerm) || 
-                x.LastName.Contains(searchTerm) || 
-                x.Email.Contains(searchTerm));
-        }
-
-        query  = query.Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize);
-        
-        var selectedQuery = query.Select(x => new Response.GetUserResponse()
-        {
-            Id = x.Id,
-            FirstName = x.FirstName,
-            LastName = x.LastName,
-            Email = x.Email,
-            Role = x.Role,
-            ImageUrl = x.ImageUrl,
-            PhoneNumber = x.PhoneNumber,
-            Address = x.Address,
-        });
-        
-        var listResult = await selectedQuery.ToListAsync();
-        var totalItems = listResult.Count();
-
-        var result = new Base.Response.PageResult<Response.GetUserResponse>()
-        {
-            Item = listResult,
-            PageIndex = pageIndex,
-            PageSize = pageSize,
-            TotalItems = totalItems,
+            TotalItems = totalItems
         };
         
         return result;
     }
-    
 
-    public async Task<Response.GetUserResponse?> GetUserById(Guid id)
+    public async Task<Response.GetUsersResponse?> GetUserById(Guid id)
     {
         var query = _dbContext.Users.Where(x => x.Id == id);
-
-        var selectedQuery = query.Select(x => new Response.GetUserResponse()
-        {
-            Id = x.Id,
-            FirstName = x.FirstName,
-            LastName = x.LastName,
-            Email = x.Email,
-            Role = x.Role,
-            ImageUrl = x.ImageUrl,
-            PhoneNumber = x.PhoneNumber,
-            Address = x.Address,
-        });
+        
+        var selectedQuery = query
+            .Select(x => new Response.GetUsersResponse()
+            {
+                Id = x.Id,
+                Email = x.Email,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                ImageUrl = x.ImageUrl,
+                PhoneNumber = x.PhoneNumber,
+                Address = x.Address,
+                Role = x.Role,
+            });
+        
         var result = await selectedQuery.FirstOrDefaultAsync();
+        
         return result;
     }
 }

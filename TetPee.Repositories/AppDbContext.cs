@@ -153,7 +153,7 @@ public class AppDbContext : DbContext
 
             var seller = new List<Seller>()
             {
-                new ()
+                new()
                 {
                     Id = SellerId1,
                     TaxCode = "TAXCODE123",
@@ -162,7 +162,7 @@ public class AppDbContext : DbContext
                     // UserId = 
                     UserId = UserId1
                 },
-                new ()
+                new()
                 {
                     Id = Guid.NewGuid(),
                     TaxCode = "TAXCODE123",
@@ -171,6 +171,18 @@ public class AppDbContext : DbContext
                     UserId = new Guid("0101b85c-b450-4bb9-8226-0d02b0eb6e03")
                 }
             };
+            // for(int i = 0; i < 1000; i++)
+            // {
+            //     var newSeller = new Seller
+            //     {
+            //         Id = Guid.NewGuid(),
+            //         TaxCode = null,
+            //         CompanyName = null,
+            //         CompanyAddress = null,
+            //         UserId = Users.gui
+            //     };
+            //     seller.Add(newSeller);
+            // }
             
             builder.HasData(seller);
         });

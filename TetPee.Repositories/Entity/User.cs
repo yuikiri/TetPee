@@ -12,7 +12,7 @@ public class User: BaseEntity<Guid>, IAuditableEntity
     
     public string? ImageUrl { get; set; } = null;
     public string? PhoneNumber { get; set; } = null;
-    // public string? dateOfBirth { get; set; }
+    public string? DateOfBirth { get; set; }
     public string? Address { get; set; }
     public string Role { get; set; } = "User"; // User, Seller, Admin
     public bool IsVerify { get; set; } = false; // Khi user register, thì phải verify email hợp lệ
