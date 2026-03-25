@@ -98,7 +98,7 @@ public class AppDbContext : DbContext
                 {
                     Id = UserId1,
                     Email = "hoang1402205@gmail.com",
-                    FirstName = "Tan",
+                    FirstName = "hoang01",
                     LastName = "Tran",
                     HashedPassword = "hashed_password_1",
                 },
@@ -106,7 +106,7 @@ public class AppDbContext : DbContext
                 {
                     Id = UserId2,
                     Email = "hoang1402206@gmail.com",
-                    FirstName = "Tan",
+                    FirstName = "hoang02",
                     LastName = "Tran",
                     HashedPassword = "hashed_password_1",
                 }
@@ -114,7 +114,7 @@ public class AppDbContext : DbContext
                 {
                     Id = new Guid("0101b85c-b450-4bb9-8226-0d02b0eb6e03"),
                     Email = "hoang1402207@gmail.com",
-                    FirstName = "Tan",
+                    FirstName = "hoang03",
                     LastName = "Tran",
                     HashedPassword = "hashed_password_1",
                 },
@@ -128,7 +128,7 @@ public class AppDbContext : DbContext
                     Id = Guid.NewGuid(),
                     Email = "quochoang" + i + "@gmail.com",
                     FirstName = "Hoàng" + i,
-                    LastName = "Quốc" + i,
+                    LastName = "Quốc ",
                     HashedPassword = "hashed_password_" + i,
                 };
                 users.Add(newUser);

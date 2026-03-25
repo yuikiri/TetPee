@@ -1,6 +1,4 @@
-using TetPee.Services.Identity;
-
-namespace TetPee.Services.Identity;
+﻿namespace TetPee.Services.Identity;
 
 public interface IService
 {
