@@ -27,4 +27,11 @@ public class SellerController: ControllerBase
         var result = await _sellerService.GetSellerById(id);
         return Ok(result);
     }
+    
+    [HttpPost("")]
+    public async Task<IActionResult> CreateSeller(Request.CreateSellerRequest request)
+    {
+        var result = await _sellerService.CreateSeller(request);
+        return Ok(result);
+    }
 }

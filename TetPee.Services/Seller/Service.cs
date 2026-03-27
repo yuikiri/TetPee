@@ -7,12 +7,12 @@ namespace TetPee.Services.Seller;
 
 public class Service : IService
 {
-    private readonly AppDbContext _dbContext;
+private readonly AppDbContext _dbContext;
 
-    public Service(AppDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+public Service(AppDbContext dbContext)
+{
+    _dbContext = dbContext;
+}
 
     public async Task<Base.Response.PageResult<Response.GetSellersResponse>> GetSellers(string? searchTerm, int pageSize, int pageIndex)
     {
@@ -113,5 +113,49 @@ public class Service : IService
         var result = await selectedQuery.FirstOrDefaultAsync();
 
         return result;
+    }
+    
+    public async Task<string> CreateSeller(Request.CreateSellerRequest request)
+    {
+        var existingUser = _dbContext.Users.FirstOrDefault(x => x.Email == request.Email);
+        
+        if(existingUser != null)
+        {
+            throw new Exception("Email already exists");
+        }
+        
+        var user = new Repositories.Entity.User()
+        {
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            HashedPassword = request.Password,
+            Role = "Seller"
+        };
+
+        _dbContext.Add(user);
+
+        var result = await _dbContext.SaveChangesAsync();
+        
+        if (result > 0)
+        {
+            var seller = new Repositories.Entity.Seller()
+            {
+                CompanyAddress = request.CompanyAddress,
+                CompanyName = request.CompanyName,
+                TaxCode = request.TaxCode,
+                UserId = user.Id,
+            };
+            
+            _dbContext.Add(seller);
+            
+            var sellerResult = await _dbContext.SaveChangesAsync();
+
+            if (sellerResult > 0) return "Add Seller successfully";
+            
+            return "Add Seller fail";
+        }
+        
+        return "Add Seller fail";
     }
 }
