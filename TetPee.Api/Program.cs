@@ -14,6 +14,8 @@ using SellerService = TetPee.Services.Seller;
 using IdentityService = TetPee.Services.Identity;
 using JwtService = TetPee.Services.JwtService;
 using ProductService = TetPee.Services.Product;
+using MediaService = TetPee.Services.MediaService;
+using CloudinaryService = TetPee.Services.CloudinaryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,7 @@ builder.Services.AddScoped<CategoryService.IService, CategoryService.Service>();
 builder.Services.AddScoped<SellerService.IService, SellerService.Service>();
 builder.Services.AddScoped<IdentityService.IService, IdentityService.Service>();
 builder.Services.AddScoped<ProductService.IService, ProductService.Service>();
+builder.Services.AddScoped<MediaService.IService, CloudinaryService.Service>();
 
 builder.Services.AddScoped<JwtService.IService, JwtService.Service>();
 
