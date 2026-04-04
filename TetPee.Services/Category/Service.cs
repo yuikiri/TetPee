@@ -28,7 +28,7 @@ public class Service : IService
         });
 
         var listResult = await selectedQuery.ToListAsync();
-            
+        throw new Exception("Something went wrong");
         return listResult;
     }
 

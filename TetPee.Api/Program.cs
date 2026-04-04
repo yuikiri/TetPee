@@ -16,15 +16,17 @@ using JwtService = TetPee.Services.JwtService;
 using ProductService = TetPee.Services.Product;
 using MediaService = TetPee.Services.MediaService;
 using CloudinaryService = TetPee.Services.CloudinaryService;
+using MailService = TetPee.Services.MailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerServices();
+builder.Services.AddSwaggerGen();   
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
@@ -32,14 +34,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+builder.Services.AddJwtServices(builder.Configuration);
+builder.Services.AddSwaggerServices();
+
 builder.Services.AddScoped<UserService.IService, UserService.Service>();
 builder.Services.AddScoped<CategoryService.IService, CategoryService.Service>();
 builder.Services.AddScoped<SellerService.IService, SellerService.Service>();
+builder.Services.AddScoped<JwtService.IService, JwtService.Service>();
 builder.Services.AddScoped<IdentityService.IService, IdentityService.Service>();
 builder.Services.AddScoped<ProductService.IService, ProductService.Service>();
 builder.Services.AddScoped<MediaService.IService, CloudinaryService.Service>();
-
-builder.Services.AddScoped<JwtService.IService, JwtService.Service>();
+builder.Services.AddScoped<MailService.IService, MailService.Service>();
 
 builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
@@ -53,6 +58,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerAPI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

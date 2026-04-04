@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TetPee.Repositories;
 using TetPee.Repository;
+using TetPee.Services.MailService;
 using TetPee.Services.User;
 
 namespace TetPee.Services.Seller;
@@ -8,10 +9,12 @@ namespace TetPee.Services.Seller;
 public class Service : IService
 {
 private readonly AppDbContext _dbContext;
+private readonly MailService.IService _emailService;
 
-public Service(AppDbContext dbContext)
+public Service(AppDbContext dbContext,  MailService.IService emailService)
 {
     _dbContext = dbContext;
+    _emailService = emailService;
 }
 
     public async Task<Base.Response.PageResult<Response.GetSellersResponse>> GetSellers(string? searchTerm, int pageSize, int pageIndex)
@@ -150,6 +153,14 @@ public Service(AppDbContext dbContext)
             _dbContext.Add(seller);
             
             var sellerResult = await _dbContext.SaveChangesAsync();
+
+            await _emailService.SendMail(new MailContent()
+            {
+                To = request.Email,
+                Subject = "Wellcome Seller",
+                Body = $"Dear {request.FirstName} {request.LastName}, \n\n" +
+                       "Thank you",
+            });
 
             if (sellerResult > 0) return "Add Seller successfully";
             

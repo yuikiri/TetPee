@@ -11,4 +11,5 @@ public interface IService
         Guid id);
 
     public Task<string> CreateSeller(Request.CreateSellerRequest request);
+    
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using TetPee.Repositories;
 using TetPee.Repositories.Entity;
 
@@ -7,13 +8,17 @@ namespace TetPee.Services.Product;
 public class Service : IService
 {
     private readonly AppDbContext _dbContext;
+    public readonly IHttpContextAccessor _httpContext;
 
-    public Service(AppDbContext dbContext)
+    public Service(AppDbContext dbContext,  IHttpContextAccessor httpContext)
     {
         _dbContext = dbContext;
+        _httpContext = httpContext;
     }
     public async Task<string> CreateProduct(Request.CreateProductRequest request)
     {
+        var sellerId = _httpContext.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "SellerId")?.Value;
+        var sellerIdGuid = Guid.Parse(sellerId!);
         var existingProduct = _dbContext.Products
             .Where(x => x.Name.ToLower().Trim() == request.Name.ToLower().Trim());
 
@@ -23,7 +28,7 @@ public class Service : IService
             throw new Exception("Product already exists");
         }
             
-        var existingSeller = _dbContext.Sellers.Where(x => x.Id == request.SellerId);
+        var existingSeller = _dbContext.Sellers.Where(x => x.Id == sellerIdGuid);
         
         bool isExistSeller = await existingSeller.AnyAsync();
         
@@ -37,7 +42,7 @@ public class Service : IService
             Name = request.Name,
             Description = request.Description,
             Price = request.Price,
-            SellerId =  request.SellerId
+            SellerId =  sellerIdGuid
         };
         
         _dbContext.Add(product);
