@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+
 using TetPee.Api.Extention;
 using TetPee.Api.Middlewares;
 using TetPee.Repositories;
-using TetPee.Repository;
-using TetPee.Services.JwtService;
+
 using UserService = TetPee.Services.User;
 using CategoryService = TetPee.Services.Category;
 using SellerService = TetPee.Services.Seller;
@@ -17,6 +14,7 @@ using ProductService = TetPee.Services.Product;
 using MediaService = TetPee.Services.MediaService;
 using CloudinaryService = TetPee.Services.CloudinaryService;
 using MailService = TetPee.Services.MailService;
+using CartService = TetPee.Services.Cart;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +43,8 @@ builder.Services.AddScoped<IdentityService.IService, IdentityService.Service>();
 builder.Services.AddScoped<ProductService.IService, ProductService.Service>();
 builder.Services.AddScoped<MediaService.IService, CloudinaryService.Service>();
 builder.Services.AddScoped<MailService.IService, MailService.Service>();
+builder.Services.AddScoped<CartService.IService, CartService.Service>();
+
 
 builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 

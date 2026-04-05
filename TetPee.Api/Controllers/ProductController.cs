@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TetPee.Api.Extention;
 using TetPee.Repositories;
+using TetPee.Services.Models;
 using TetPee.Services.Product;
 
 namespace TetPee.Api.Controllers;
@@ -18,9 +19,9 @@ public class ProductController : ControllerBase
     
     [Authorize(Policy = JwtExtentions.SellerPolicy)]
     [HttpPost("")]
-    public async Task<IActionResult> CreateSeller(Request.CreateProductRequest request)
+    public async Task<IActionResult> CreateProduct(Request.CreateProductRequest request)
     {
         var result = await _productService.CreateProduct(request);
-        return Ok(result);
+        return Ok(ApiResponse.ApiResponseFactory.SuccessResponse(result, "Product created", HttpContext.TraceIdentifier));
     }
 }

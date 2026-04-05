@@ -19,6 +19,7 @@ public class User: BaseEntity<Guid>, IAuditableEntity
     public int VerifyCode { get; set; } // Mã verify gửi về email
     
     public Seller? Seller { get; set; }
+    public Cart? Cart { get; set; }
     public ICollection<Order> Orders { get; set; } = new List<Order>();
     //mối quan hệ 1 nhiều với Order, 1 User có nhiều Order
     

@@ -35,6 +35,7 @@ public class AppDbContext : DbContext
     public DbSet<OrderDetail> OrderDetails { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<CartDetail> CartDetails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -83,6 +84,7 @@ public class AppDbContext : DbContext
                 .WithOne(s => s.User)
                 .HasForeignKey<Seller>(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.Cart).WithOne(x => x.User).HasForeignKey<Cart>(x => x.UserId);
             
             // DeleteBehavior.Cascade: Khi một User bị xóa, thì Seller liên quan cũng sẽ bị xóa theo.
             // DeleteBehavior.Restrict: Ngăn chặn việc xóa một User nếu có Seller liên quan tồn tại.
@@ -97,42 +99,42 @@ public class AppDbContext : DbContext
                 new ()
                 {
                     Id = UserId1,
-                    Email = "hoang1402205@gmail.com",
+                    Email = "hoang1@gmail.com",
                     FirstName = "hoang01",
-                    LastName = "Tran",
+                    LastName = "quoc",
                     HashedPassword = "hashed_password_1",
                 },
                 new ()
                 {
                     Id = UserId2,
-                    Email = "hoang1402206@gmail.com",
+                    Email = "hoang2@gmail.com",
                     FirstName = "hoang02",
-                    LastName = "Tran",
+                        LastName = "quoc",
                     HashedPassword = "hashed_password_1",
                 }
-                ,new ()
-                {
-                    Id = new Guid("0101b85c-b450-4bb9-8226-0d02b0eb6e03"),
-                    Email = "hoang1402207@gmail.com",
-                    FirstName = "hoang03",
-                    LastName = "Tran",
-                    HashedPassword = "hashed_password_1",
-                },
+                // ,new ()
+                // {
+                //     Id = new Guid("0101b85c-b450-4bb9-8226-0d02b0eb6e03"),
+                //     Email = "hoang1402207@gmail.com",
+                //     FirstName = "hoang03",
+                //     LastName = "Tran",
+                //     HashedPassword = "hashed_password_1",
+                // },
                 
             };
             
-            for(int i = 0; i < 1000; i++)
-            {
-                var newUser = new User()
-                {
-                    Id = Guid.NewGuid(),
-                    Email = "quochoang" + i + "@gmail.com",
-                    FirstName = "Hoàng" + i,
-                    LastName = "Quốc ",
-                    HashedPassword = "hashed_password_" + i,
-                };
-                users.Add(newUser);
-            }
+            // for(int i = 0; i < 1000; i++)
+            // {
+            //     var newUser = new User()
+            //     {
+            //         Id = Guid.NewGuid(),
+            //         Email = "quochoang" + i + "@gmail.com",
+            //         FirstName = "Hoàng" + i,
+            //         LastName = "Quốc ",
+            //         HashedPassword = "hashed_password_" + i,
+            //     };
+            //     users.Add(newUser);
+            // }
             
             builder.HasData(users);
         });
@@ -151,6 +153,8 @@ public class AppDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(500);
 
+            builder.HasMany(x => x.Products).WithOne(x => x.Seller).HasForeignKey(x => x.SellerId);
+            
             var seller = new List<Seller>()
             {
                 new()
@@ -165,10 +169,10 @@ public class AppDbContext : DbContext
                 new()
                 {
                     Id = Guid.NewGuid(),
-                    TaxCode = "TAXCODE123",
-                    CompanyName = "ABC Company",
+                    TaxCode = "TAXCODE321",
+                    CompanyName = "BCA Company",
                     CompanyAddress = "123 Main St, Cityville",
-                    UserId = new Guid("0101b85c-b450-4bb9-8226-0d02b0eb6e03")
+                    UserId = UserId2
                 }
             };
             // for(int i = 0; i < 1000; i++)
@@ -192,6 +196,8 @@ public class AppDbContext : DbContext
             builder.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+            
+            builder.HasMany(x => x.ProductCategories).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId);
             
             var categories = new List<Category>()
             {
@@ -246,6 +252,9 @@ public class AppDbContext : DbContext
                 .HasColumnType("decimal(18,2)")
                 .IsRequired();
 
+            builder.HasMany(x => x.ProductCategories).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
+         
+            
             var products = new List<Product>()
             {
                 new Product()
@@ -310,6 +319,9 @@ public class AppDbContext : DbContext
                     Status = "Completed"
                 }
             };
+             
+            builder.HasOne(x => x.User).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
+            
             
             builder.HasData(orders);
         });
@@ -345,6 +357,13 @@ public class AppDbContext : DbContext
             };
             
             builder.HasData(orderDetails);
+        });
+
+
+        modelBuilder.Entity<CartDetail>(builder =>
+        {
+            builder.HasOne(x => x.Product).WithMany(x => x.CartDetails).HasForeignKey(x => x.ProductId);
+            builder.HasOne(x => x.Cart).WithMany(x => x.CartDetails).HasForeignKey(x => x.CartId);
         });
     }
 }
