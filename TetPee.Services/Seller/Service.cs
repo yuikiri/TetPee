@@ -9,12 +9,12 @@ namespace TetPee.Services.Seller;
 public class Service : IService
 {
 private readonly AppDbContext _dbContext;
-private readonly MailService.IService _emailService;
+private readonly MailService.IService _mailService;
 
 public Service(AppDbContext dbContext,  MailService.IService emailService)
 {
     _dbContext = dbContext;
-    _emailService = emailService;
+    _mailService = emailService;
 }
 
     public async Task<Base.Response.PageResult<Response.GetSellersResponse>> GetSellers(string? searchTerm, int pageSize, int pageIndex)
@@ -154,7 +154,7 @@ public Service(AppDbContext dbContext,  MailService.IService emailService)
             
             var sellerResult = await _dbContext.SaveChangesAsync();
 
-            await _emailService.SendMail(new MailContent()
+            await _mailService.SendMail(new MailContent()
             {
                 To = request.Email,
                 Subject = "Wellcome Seller",

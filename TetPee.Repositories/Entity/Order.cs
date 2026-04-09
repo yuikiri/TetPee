@@ -6,7 +6,7 @@ namespace TetPee.Repositories.Entity;
 public class Order: BaseEntity<Guid>, IAuditableEntity
 {
     public decimal TotalAmount { get; set; }
-    public string Status { get; set; } = "Pending"; // Pending, Processing, Completed, Cancelled
+    public string Status { get; set; } = "Pending"; // Pending, Completed, Cancelled
     public required string Address { get; set; }
     
     public Guid UserId { get; set; }

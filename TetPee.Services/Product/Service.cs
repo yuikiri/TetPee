@@ -8,7 +8,7 @@ namespace TetPee.Services.Product;
 public class Service : IService
 {
     private readonly AppDbContext _dbContext;
-    public readonly IHttpContextAccessor _httpContext;
+    private readonly IHttpContextAccessor _httpContext;
 
     public Service(AppDbContext dbContext,  IHttpContextAccessor httpContext)
     {

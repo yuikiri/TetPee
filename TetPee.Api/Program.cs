@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-
+using Quartz;
 using TetPee.Api.Extention;
 using TetPee.Api.Middlewares;
 using TetPee.Repositories;
@@ -15,6 +15,9 @@ using MediaService = TetPee.Services.MediaService;
 using CloudinaryService = TetPee.Services.CloudinaryService;
 using MailService = TetPee.Services.MailService;
 using CartService = TetPee.Services.Cart;
+using OrderService = TetPee.Services.Order;
+using BackgroundJobService = TetPee.Services.BackgroundJobService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +47,30 @@ builder.Services.AddScoped<ProductService.IService, ProductService.Service>();
 builder.Services.AddScoped<MediaService.IService, CloudinaryService.Service>();
 builder.Services.AddScoped<MailService.IService, MailService.Service>();
 builder.Services.AddScoped<CartService.IService, CartService.Service>();
+builder.Services.AddScoped<OrderService.IService, OrderService.Service>();
 
+builder.Services.AddQuartz(options =>
+{
+    var jobKey = new JobKey(nameof(BackgroundJobService.ProcessTransactionPendingJob));
+
+    options
+        .AddJob<BackgroundJobService.ProcessTransactionPendingJob>(jobKey)
+        .AddTrigger(trigger =>
+            trigger
+                .ForJob(jobKey)
+                .WithSimpleSchedule(schedule => schedule
+                    .WithIntervalInMinutes(2)
+                    //thời gian lặp lại
+                    .RepeatForever()
+                    //lặp lại qài lun
+                )
+        );
+});
+builder.Services.AddQuartzHostedService(options =>
+{
+    options.WaitForJobsToComplete = true;
+    //làm cái job thứ 1 xong thì mới lặp cái job 2
+});
 
 builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
