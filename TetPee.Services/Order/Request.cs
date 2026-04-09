@@ -18,7 +18,7 @@ public class Request
     public class SepayWebhookRequest
     {
         public string Gateway { get; set; }
-        public DateTime TransactionDate { get; set; }
+        public string TransactionDate { get; set; }
         public string AccountNumber { get; set; }
         public string SubAccount { get; set; }
         public string Code { get; set; }
@@ -35,9 +35,21 @@ public class Request
         //setup chuyển khoản thành công(bằng tiền thâật). để xác nhận đơn hàng này đã đc đặt
         //nếu tạo ra đơn hàng mà ko chuyển khoản liền, thì đơn hàng sẽ bị hủy sau 15 phút
         //để tránh tình trạng khách hàng đặt hàng rồi mà ko chuyển khoản, ảnh hưởng ến việc quản lý
-    // public class UpdateOrderRequest
+    
+        
     // {
-    //     
+    // "gateway": "MBBank",
+    // "transactionDate": "2026-04-08 14:03:00",
+    // "accountNumber": "0963518963",
+    // "subAccount": null,
+    // "code": null,
+    // "content": "MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
+    // "transferType": "in",
+    // "description": "BankAPINotify MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
+    // "transferAmount": 900000,
+    // "referenceCode": "FT26098603056212",
+    // "accumulated": 0,
+    // "id": 48948351
     // }
     
 }

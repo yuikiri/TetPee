@@ -94,7 +94,7 @@ public class Service : IService
 
         
         
-        string description = $"TETPEE - {order.Id}";
+        string description = $"TETPEE - {order.Id:N}";
         
         var response = new Response.CreateOrderResponse()
         {
@@ -103,16 +103,18 @@ public class Service : IService
             BankName = "MBBank",
             BankAccount = "VQRQAIDYX0266",
             Description = description,
-            QRCode = ""
+            QrCode = ""
         };
-        
-        string sqCode = $"https://qr.sepay.vn/img?bank={response.BankName}&" +
+
+        string sqCode = $"https://qr.sepay.vn/img?" +
                         $"acc={response.BankAccount}&" +
-                        $"template=compact&" +
+                        $"bank={response.BankName}&" +
                         $"amount={response.TotalAmount}&" +
-                        $"des={response.Description}&";
-        
-        response.QRCode = sqCode;
+                        $"des={response.Description}&" +
+                        $"template=qronly";
+                        
+        // https://qr.sepay.vn/img?acc={response.BankAccount}&bank={response.BankName}&amount={response.TotalAmount}&des={response.Description}&template=qronly
+        response.QrCode = sqCode;
         
         return response;
     }
@@ -197,3 +199,17 @@ public class Service : IService
      //sẽ tạo ra 1 dấu ấn riêng (làm dấu)
 
      // '{"gateway":"BIDV","transactionDate":"2026-04-06 23:41:15","accountNumber":"8886369921","subAccount":"96247BENTRAN","code":"TCMPBf9c3895c14b94583bad78673263","content":"QR - TCMPBf9c3895c14b94583bad786732631b1ca","transferType":"in","description":"BankAPINotify QR - TCMPBf9c3895c14b94583bad786732631b1ca","transferAmount":2500,"referenceCode":"bc8af415-13e4-4bf9-8352-a8af59df5808","accumulated":0,"id":48628369}'
+     // {
+     // "gateway": "MBBank",
+     // "transactionDate": "2026-04-08 14:03:00",
+     // "accountNumber": "0963518963",
+     // "subAccount": null,
+     // "code": null,
+     // "content": "MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
+     // "transferType": "in",
+     // "description": "BankAPINotify MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
+     // "transferAmount": 900000,
+     // "referenceCode": "FT26098603056212",
+     // "accumulated": 0,
+     // "id": 48948351
+     // }

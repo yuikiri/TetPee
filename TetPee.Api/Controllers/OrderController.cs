@@ -17,8 +17,8 @@ public class OrderController : ControllerBase
     [HttpPost("create order")]
     public async Task<IActionResult> CreateOrder(Request.CreateOrderRequest request)
     {
-        await _orderService.CreateOrder(request);
-        return Ok(ApiResponse.ApiResponseFactory.SuccessResponse(request, "Order created", HttpContext.TraceIdentifier));
+        var result = await _orderService.CreateOrder(request);
+        return Ok(ApiResponse.ApiResponseFactory.SuccessResponse(result, "Order created", HttpContext.TraceIdentifier));
     }
     
     [HttpPost("sepay/webhook")]

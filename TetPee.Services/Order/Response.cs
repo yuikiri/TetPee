@@ -9,6 +9,6 @@ public class Response
         public required string BankName { get; set; }
         public required string BankAccount { get; set; }
         public required string Description { get; set; }
-        public required string QRCode { get; set; }
+        public required string QrCode { get; set; }
     }
 }
