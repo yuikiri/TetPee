@@ -182,34 +182,62 @@ public class Service : IService
         _dbContext.Orders.Update(order);
         await _dbContext.SaveChangesAsync();
     }
-}
 
-//Bản chất của Sepay
+    
+    //Bản chất của Sepay
 // Sẽ 1 thg ngồi lắng nghe hết tất cả các giao dịch của mình trong tài khoản
 // và mình sẽ có thể làm 1 thứ, nếu có giao dịch nào chuyển đến thì gọi 1 api callback
 // và không phải giao dịch nào cũng là giao dịch của hệ thống mình
-     //Giao dịch trả tiền lại từ bạn A -> call API
-     //Giao dịch mua hàng từ hệ thống Tetpee -> call API
-     //Giao dịch trả tiền cổ tức -> call API
+    //Giao dịch trả tiền lại từ bạn A -> call API
+    //Giao dịch mua hàng từ hệ thống Tetpee -> call API
+    //Giao dịch trả tiền cổ tức -> call API
      
-     //Call API của ai tùy mọi người setup với hệ thống của mình, nhưng ở đây
-     // a muốn là nó call api của mình để thông báo là đã chuyển khoản thành công
+    //Call API của ai tùy mọi người setup với hệ thống của mình, nhưng ở đây
+    // a muốn là nó call api của mình để thông báo là đã chuyển khoản thành công
      
-     //không phải giao dịch nào cũng thuộc về hệ thống của mình vậy thì để phân biệt giao dịch của mình thì chúng ta
-     //sẽ tạo ra 1 dấu ấn riêng (làm dấu)
+    //không phải giao dịch nào cũng thuộc về hệ thống của mình vậy thì để phân biệt giao dịch của mình thì chúng ta
+    //sẽ tạo ra 1 dấu ấn riêng (làm dấu)
 
-     // '{"gateway":"BIDV","transactionDate":"2026-04-06 23:41:15","accountNumber":"8886369921","subAccount":"96247BENTRAN","code":"TCMPBf9c3895c14b94583bad78673263","content":"QR - TCMPBf9c3895c14b94583bad786732631b1ca","transferType":"in","description":"BankAPINotify QR - TCMPBf9c3895c14b94583bad786732631b1ca","transferAmount":2500,"referenceCode":"bc8af415-13e4-4bf9-8352-a8af59df5808","accumulated":0,"id":48628369}'
-     // {
-     // "gateway": "MBBank",
-     // "transactionDate": "2026-04-08 14:03:00",
-     // "accountNumber": "0963518963",
-     // "subAccount": null,
-     // "code": null,
-     // "content": "MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
-     // "transferType": "in",
-     // "description": "BankAPINotify MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
-     // "transferAmount": 900000,
-     // "referenceCode": "FT26098603056212",
-     // "accumulated": 0,
-     // "id": 48948351
-     // }
+    // '{"gateway":"BIDV","transactionDate":"2026-04-06 23:41:15","accountNumber":"8886369921","subAccount":"96247BENTRAN","code":"TCMPBf9c3895c14b94583bad78673263","content":"QR - TCMPBf9c3895c14b94583bad786732631b1ca","transferType":"in","description":"BankAPINotify QR - TCMPBf9c3895c14b94583bad786732631b1ca","transferAmount":2500,"referenceCode":"bc8af415-13e4-4bf9-8352-a8af59df5808","accumulated":0,"id":48628369}'
+    // {
+    // "gateway": "MBBank",
+    // "transactionDate": "2026-04-08 14:03:00",
+    // "accountNumber": "0963518963",
+    // "subAccount": null,
+    // "code": null,
+    // "content": "MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
+    // "transferType": "in",
+    // "description": "BankAPINotify MB 0963518963 PHAM VAN HUONG chuyen tien- Ma GD ACSP/ R7066759",
+    // "transferAmount": 900000,
+    // "referenceCode": "FT26098603056212",
+    // "accumulated": 0,
+    // "id": 48948351
+    // }
+    
+    public async Task<List<Response.GetOrderResponse>> GetOrder()
+    {
+        var userId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+        var userIdGuild = Guid.Parse(userId!);
+        var query = _dbContext.Orders.Where(x => x.UserId == userIdGuild);
+        var response = new List<Response.GetOrderResponse>();
+        foreach (var order in query.Include(order => order.OrderDetails))
+        {
+            var productIds = order.OrderDetails.Select(x => new Response.ProductOder
+            {
+                ProductId = x.ProductId,
+                Quantity = x.Quantity,
+            }).ToList();
+            
+            var orders = order.OrderDetails.Select(x => new Response.GetOrderResponse()
+            {
+                OrderId = order.Id,
+                TotalAmount = order.TotalAmount,
+                Address = order.Address,
+                Status = order.Status,
+                Products = productIds,
+            });
+            response.AddRange(orders);
+        }
+        return response;
+    }
+}

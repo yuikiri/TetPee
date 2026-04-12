@@ -27,4 +27,11 @@ public class OrderController : ControllerBase
         await _orderService.SepayWebhookHandler(request);
         return Ok(ApiResponse.ApiResponseFactory.SuccessResponse("", "Webhook response", HttpContext.TraceIdentifier));
     }
+    
+    [HttpGet("History")]
+    public async Task<IActionResult> GetOrder()
+    {
+        var result = await _orderService.GetOrder();
+        return Ok(ApiResponse.ApiResponseFactory.SuccessResponse(result,"Webhook response", HttpContext.TraceIdentifier));
+    }
 }

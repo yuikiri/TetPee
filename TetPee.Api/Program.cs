@@ -4,7 +4,7 @@ using Quartz;
 using TetPee.Api.Extention;
 using TetPee.Api.Middlewares;
 using TetPee.Repositories;
-
+using TetPee.Services.Models;
 using UserService = TetPee.Services.User;
 using CategoryService = TetPee.Services.Category;
 using SellerService = TetPee.Services.Seller;
@@ -65,6 +65,8 @@ builder.Services.AddQuartz(options =>
                     //lặp lại qài lun
                 )
         );
+    var mailkey = new JobKey(nameof(BackgroundJobService.ProcessTransactionPendingJob));
+    // options
 });
 builder.Services.AddQuartzHostedService(options =>
 {
@@ -77,6 +79,32 @@ builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
+app.UseStatusCodePages(async statusCodeContext =>
+{
+    var response = statusCodeContext.HttpContext.Response;
+    if (!string.IsNullOrWhiteSpace(response.ContentType))
+    {
+        return;
+    }
+
+    response.ContentType = "application/json";
+
+    var message = response.StatusCode switch
+    {
+        StatusCodes.Status401Unauthorized => "Unauthorized",
+        StatusCodes.Status403Forbidden => "Forbidden",
+        StatusCodes.Status404NotFound => "Resource not found",
+        _ => "Request could not be processed"
+    };
+
+    var payload = ApiResponse.ApiResponseFactory.ErrorResponse(
+        message: message,
+        traceId: statusCodeContext.HttpContext.TraceIdentifier);
+
+    await response.WriteAsJsonAsync(payload);
+});
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
